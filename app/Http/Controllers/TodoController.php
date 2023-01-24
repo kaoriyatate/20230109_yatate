@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Todo;
 use App\Http\Requests\TodoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -15,21 +16,28 @@ class TodoController extends Controller
      */
     public function index()
     {
-
+        $user = Auth::user();
+        $todos = Todo::paginate(4);
+        $param = ['todos'=> $todos, 'user'=> $user];
         $todos = Todo::all();
 
-        return view('index', ['todos' => $todos]);
+        return view('index', $param);
     }
 
+    public function tag(TodoRequest $request)
+
+    {   
+        $category = new Category();
+        $categories = $category->get();
+        return view('create', ['categories' => $categories]);
+
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -38,6 +46,7 @@ class TodoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(TodoRequest $request)
+
     {
 
         $todo = new Todo;

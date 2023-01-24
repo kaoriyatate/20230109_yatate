@@ -26,6 +26,38 @@
     h1 {
       margin-left: 30px;
       padding-top: 30px;
+
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin-left: 270px;
+      margin-top: -50px;
+    }
+
+    .logaut {
+      background-color: #FFFFFF;
+      border: 2px solid red;
+      border-radius: 5px;
+      font-weight: bold;
+      color: red;
+      width: 80px;
+      height: 40px;
+      margin-left: 10px;
+      margin-top: -20px;
+    }
+
+    .find {
+      background-color: #FFFFFF;
+      border: 2px solid greenyellow;
+      border-radius: 5px;
+      font-weight: bold;
+      color: greenyellow;
+      width: 80px;
+      height: 40px;
+      margin-left: 30px;
+      margin-bottom: 10px;
     }
 
     .content {
@@ -106,9 +138,25 @@
   <section>
     <div class="todo_list">
       <h1>Todo List</h1>
+      </li>
+      <ul>
+        @if(Auth::check())
+        <li>{{$user->name}}でログイン中</li>
+        @endif
+        <form action="{{route('logout')}}" method="POST">
+          @csrf
+          <li><input class="logaut" type="submit" name="log_button" value="ログアウト"></li>
+        </form>
+      </ul>
       <form action="/create" method="POST">
         @csrf
+        <input class="find" type="submit" name="f_button" value="タスク検索"><br>
         <input type="text" class="content" name="content" value="">
+        <select class="form-control" id="category-id" name="category_id">
+          @foreach ($categories as $category)
+          <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+          @endforeach
+        </select>
         <button type="submit" class="create">追加</button>
         @if($errors->has('content'))
         <dl>

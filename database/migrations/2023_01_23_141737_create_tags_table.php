@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTodosTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('todos', function (Blueprint $table) {
-        $table->id('id');
-        $table->string('content');
-        $table->timestamps(3);
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('category');
+            $table->timestamps(3);
         });
     }
 
@@ -28,6 +27,6 @@ class CreateTodosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('todos');
+        Schema::dropIfExists('tags');
     }
 }
